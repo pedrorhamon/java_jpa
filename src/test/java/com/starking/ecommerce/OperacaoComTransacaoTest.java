@@ -24,6 +24,7 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
 		Assert.assertEquals("Kindle Tests 2", produtoVerificacao.getNome());
 	}
 	
+	@SuppressWarnings("null")
 	@Test
 	public void atualizarObjeto() {
 		Produto produto = new Produto();
@@ -75,6 +76,25 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
 		Produto produtoVerificacao = entityManager.find(Produto.class, produto.getId());
 		Assert.assertNotNull(produtoVerificacao);
 	}
+	
+	@Test
+	public void inserirOPrimeiroObjetoComMerge() {
+		Produto produto = new Produto();
+
+		produto.setId(2L);
+		produto.setNome("Câmera Canon 2");
+		produto.setDescricao("A melhor definição para suas fotos. testes");
+		produto.setPreco(new BigDecimal(1000));
+
+		entityManager.getTransaction().begin();
+		entityManager.merge(produto);
+		entityManager.getTransaction().commit();
+
+		entityManager.clear();
+
+		Produto produtoVerificacao = entityManager.find(Produto.class, produto.getId());
+		Assert.assertNotNull(produtoVerificacao);
+	}
 
 	@Test
 	public void abrirFecharATransacao() {
@@ -88,4 +108,19 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
 
 		entityManager.getTransaction().commit();
 	}
+	
+	 @Test
+	    public void impedirOperacaoComBancoDeDados() {
+	        Produto produto = entityManager.find(Produto.class, 1);
+	        entityManager.detach(produto);
+
+	        entityManager.getTransaction().begin();
+	        produto.setNome("Kindle Paperwhite 2ª Geração");
+	        entityManager.getTransaction().commit();
+
+	        entityManager.clear();
+
+	        Produto produtoVerificacao = entityManager.find(Produto.class, produto.getId());
+	        Assert.assertEquals("Kindle", produtoVerificacao.getNome());
+	    }
 }
