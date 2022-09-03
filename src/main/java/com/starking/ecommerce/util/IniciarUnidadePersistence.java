@@ -12,7 +12,6 @@ public class IniciarUnidadePersistence {
 		EntityManager manager = entityManagerFactory.createEntityManager();
 		
 		entityManagerFactory.close();
-		manager.close();
-		
+		manager.close();	
 	}
 }
