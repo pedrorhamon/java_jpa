@@ -9,8 +9,8 @@ import com.starking.ecommerce.model.Produto;
 public class ConsultandoRegistroTest extends EntityManagerTest {
 
     @Test
-    public void busarPorIdentificador() {
-        Produto produto = entityManager.find(Produto.class, 1);
+    public void buscarPorIdentificador() {
+        Produto produto = entityManager.find(Produto.class, 1L);
 //        Produto produto = entityManager.getReference(Produto.class, 1);
 
         Assert.assertNotNull(produto);
@@ -19,7 +19,7 @@ public class ConsultandoRegistroTest extends EntityManagerTest {
 
     @Test
     public void atualizarAReferencia() {
-        Produto produto = entityManager.find(Produto.class, 1);
+        Produto produto = entityManager.find(Produto.class, 1L);
         produto.setNome("Microfone Samson");
 
         entityManager.refresh(produto);
