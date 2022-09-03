@@ -41,4 +41,12 @@ public class ConsultandoRegistroTest {
 		Assert.assertNotNull(produto);
 		Assert.assertEquals("Kindle", produto.getNome());
 	}
+	
+	@Test
+	public void atualizarReferencia() {
+		Produto produto = manager.find(Produto.class, 1);
+		produto.setNome("Philips");
+		
+		Assert.assertEquals("Kindle", produto.getNome());
+	}
 }
