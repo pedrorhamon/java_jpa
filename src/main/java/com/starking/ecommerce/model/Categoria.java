@@ -1,5 +1,6 @@
 package com.starking.ecommerce.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,7 @@ public class Categoria {
 	
 	private Integer produtoId;
 	
+	 @Column(name = "quantidade")
 	private Integer quantidade;
 
 }

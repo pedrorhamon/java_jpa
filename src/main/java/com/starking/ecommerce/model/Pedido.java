@@ -3,6 +3,7 @@ package com.starking.ecommerce.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -22,13 +23,17 @@ public class Pedido {
     @Id
     private Integer id;
 
+    @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
 
+    @Column(name = "data_conclusao")
     private LocalDateTime dataConclusao;
 
     private Integer notaFiscalId;
 
+    @Column(name = "total")
     private BigDecimal total;
 
+    @Column(name = "status")
     private StatusPedido status;
 }

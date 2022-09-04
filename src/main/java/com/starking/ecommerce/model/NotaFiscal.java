@@ -2,6 +2,7 @@ package com.starking.ecommerce.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -21,7 +22,9 @@ public class NotaFiscal {
 
     private Integer pedidoId;
 
+    @Column(name = "xml")
     private String xml;
 
+    @Column(name = "data_Emissao")
     private Date dataEmissao;
 }

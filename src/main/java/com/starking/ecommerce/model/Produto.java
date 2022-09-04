@@ -17,20 +17,20 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Produto implements Serializable{
+public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "nome")
 	private String nome;
-	
+
 	@Column(name = "descricao")
 	private String descricao;
-	
+
 	@Column(name = "preco")
 	private BigDecimal preco;
 }

@@ -2,6 +2,7 @@ package com.starking.ecommerce.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -23,7 +24,9 @@ public class ItemPedido {
 
     private Integer produtoId;
 
+    @Column(name = "preco_produto")
     private BigDecimal precoProduto;
 
+    @Column(name = "quantidade")
     private Integer quantidade;
 }

@@ -27,8 +27,8 @@ public class Cliente {
 	@Column(name = "nome")
 	private String nome;
 	
-	@Column(name = "sexo_cliente")
 	@Enumerated
+	@Column(name = "sexo_cliente")
 	private SexoCliente sexoCliente;
 	
 }

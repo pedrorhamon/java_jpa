@@ -1,5 +1,6 @@
 package com.starking.ecommerce.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -23,5 +24,6 @@ public class PagamentoCartao {
 
     private StatusPagamento status;
 
+    @Column(name = "numero")
     private String numero;
 }
