@@ -2,6 +2,7 @@ package com.starking.ecommerce.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Cliente {
 	@Column(name = "nome")
 	private String nome;
 	
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	@Column(name = "sexo_cliente")
 	private SexoCliente sexoCliente;
 	

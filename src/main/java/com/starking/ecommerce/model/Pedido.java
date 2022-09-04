@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -37,6 +39,7 @@ public class Pedido {
     @Column(name = "total")
     private BigDecimal total;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusPedido status;
 }
