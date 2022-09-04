@@ -12,7 +12,7 @@ public class ConsultandoRegistroTest extends EntityManagerTest {
 
     @Test
     public void buscarPorIdentificador() {
-        Produto produto = entityManager.find(Produto.class, 1L);
+        Produto produto = entityManager.find(Produto.class, 1);
 //        Produto produto = entityManager.getReference(Produto.class, 1);
 
         Assert.assertNotNull(produto);
@@ -21,7 +21,7 @@ public class ConsultandoRegistroTest extends EntityManagerTest {
 
     @Test
     public void atualizarAReferencia() {
-        Produto produto = entityManager.find(Produto.class, 1L);
+        Produto produto = entityManager.find(Produto.class, 1);
         produto.setNome("Microfone Samson");
 
         entityManager.refresh(produto);
@@ -33,7 +33,7 @@ public class ConsultandoRegistroTest extends EntityManagerTest {
     public void mostrarDifencaPersistMerge() {
         Produto produtoPersist = new Produto();
 
-        produtoPersist.setId(5L);
+        produtoPersist.setId(1);
         produtoPersist.setNome("Smartphone One Plus");
         produtoPersist.setDescricao("O processador mais rápido.");
         produtoPersist.setPreco(new BigDecimal(2000));
@@ -50,7 +50,7 @@ public class ConsultandoRegistroTest extends EntityManagerTest {
 
         Produto produtoMerge = new Produto();
 
-        produtoMerge.setId(6L);
+        produtoMerge.setId(1);
         produtoMerge.setNome("Notebook Dell");
         produtoMerge.setDescricao("O melhor da categoria.");
         produtoMerge.setPreco(new BigDecimal(2000));

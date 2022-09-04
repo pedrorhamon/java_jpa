@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.starking.ecommerce.model.enums.StatusPedido;
 
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@Table(name = "pedido")
 public class Pedido {
 
     @EqualsAndHashCode.Include
@@ -29,6 +31,7 @@ public class Pedido {
     @Column(name = "data_conclusao")
     private LocalDateTime dataConclusao;
 
+    @Column(name = "nota_fiscal_id")
     private Integer notaFiscalId;
 
     @Column(name = "total")

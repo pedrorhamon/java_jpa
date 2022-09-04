@@ -2,22 +2,28 @@ package com.starking.ecommerce.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "categoria")
 public class Categoria {
-	
-	private Integer id;
-	
-	private Integer produtoId;
-	
-	 @Column(name = "quantidade")
-	private Integer quantidade;
+
+    @EqualsAndHashCode.Include
+    @Id
+    private Integer id;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @Column(name = "categoria_pai_id")
+    private Integer categoriaPaiId;
 
 }

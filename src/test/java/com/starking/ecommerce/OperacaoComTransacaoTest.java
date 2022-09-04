@@ -29,7 +29,7 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
 	public void atualizarObjeto() {
 		Produto produto = new Produto();
 		
-		produto.setId(1L);
+		produto.setId(1);
 		produto.setNome("Kindle Tests");
 		produto.setDescricao("Conheça o tests");
 		produto.setPreco(new BigDecimal(4500));
@@ -62,7 +62,7 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
 	public void inserirOPrimeiroObjeto() {
 		Produto produto = new Produto();
 
-		produto.setId(3L);
+		produto.setId(3);
 		produto.setNome("Câmera Canon");
 		produto.setDescricao("A melhor definição para suas fotos.");
 		produto.setPreco(new BigDecimal(5000));
@@ -81,7 +81,7 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
 	public void inserirOPrimeiroObjetoComMerge() {
 		Produto produto = new Produto();
 
-		produto.setId(2L);
+		produto.setId(2);
 		produto.setNome("Câmera Canon 2");
 		produto.setDescricao("A melhor definição para suas fotos. testes");
 		produto.setPreco(new BigDecimal(1000));
