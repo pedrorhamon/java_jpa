@@ -2,6 +2,7 @@ package com.starking.ecommerce.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -26,7 +27,7 @@ public class PagamentoBoleto {
     @Column(name = "pedido_id")
     private Integer pedidoId;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusPagamento status;
 
