@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.starking.ecommerce.model.enums.StatusPedido;
@@ -40,10 +41,6 @@ public class Pedido {
 
     @Column(name = "data_conclusao")
     private LocalDateTime dataConclusao;
-
-    @ManyToOne
-    @JoinColumn(name = "nota_fiscal_id")
-    private NotaFiscal notaFiscal;
     
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -55,6 +52,13 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusPedido status;
+    
+    @OneToOne(mappedBy = "pedido")
+    @JoinColumn(name = "pagamento_cartao")
+    private PagamentoCartao pagamentoCartao;
+    
+    @OneToOne(mappedBy = "pedido")
+    private NotaFiscal notaFiscal;
     
     @Embedded
     private Endereco endereco;
