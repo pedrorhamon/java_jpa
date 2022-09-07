@@ -1,4 +1,4 @@
-package com.starking.ecommerce;
+package com.starking.ecommerce.mapeamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

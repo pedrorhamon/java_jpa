@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.starking.ecommerce.model.enums.StatusPedido;
@@ -36,6 +38,10 @@ public class Pedido {
 
     @Column(name = "nota_fiscal_id")
     private Integer notaFiscalId;
+    
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     @Column(name = "total")
     private BigDecimal total;

@@ -1,4 +1,4 @@
-package com.starking.ecommerce;
+package com.starking.ecommerce.mapeamento;
 
 import org.junit.Assert;
 import org.junit.Test;
