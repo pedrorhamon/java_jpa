@@ -2,15 +2,19 @@ package com.starking.ecommerce.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "produto")
@@ -34,4 +38,7 @@ public class Produto implements Serializable {
 
 	@Column(name = "preco")
 	private BigDecimal preco;
+	
+	@OneToMany
+	private List<ItemPedido> itemPedidos; 
 }
