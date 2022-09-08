@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
+import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.Endereco;
 import com.starking.ecommerce.model.Pedido;
 import com.starking.ecommerce.model.enums.StatusPedido;
@@ -15,6 +16,8 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
 
     @Test
     public void analisarMapeamentoObjetoEmbutido() {
+        Cliente cliente = entityManager.find(Cliente.class, 1);
+
         Endereco endereco = new Endereco();
         endereco.setCep("00000-00");
         endereco.setLogradouro("Rua das Laranjeiras");
@@ -24,11 +27,12 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
         endereco.setEstado("MG");
 
         Pedido pedido = new Pedido();
-        pedido.setId(1);
+        // pedido.setId(1); Comentado porque estamos utilizando IDENTITY
         pedido.setDataPedido(LocalDateTime.now());
         pedido.setStatus(StatusPedido.AGUARDANDO);
         pedido.setTotal(new BigDecimal(1000));
         pedido.setEndereco(endereco);
+        pedido.setCliente(cliente);
 
         entityManager.getTransaction().begin();
         entityManager.persist(pedido);
