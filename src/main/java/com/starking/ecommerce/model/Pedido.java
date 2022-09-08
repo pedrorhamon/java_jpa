@@ -63,6 +63,6 @@ public class Pedido {
     @Embedded
     private Endereco endereco;
     
-    @OneToMany
+    @OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itemPedidos; 
 }
