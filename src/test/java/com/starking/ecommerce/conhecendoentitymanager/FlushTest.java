@@ -15,7 +15,7 @@ public class FlushTest extends EntityManagerTest {
 			Pedido pedido = entityManager.find(Pedido.class, 1);
 			pedido.setStatus(StatusPedido.PAGO);
 
-			entityManager.flush();
+//			entityManager.flush();
 			
 			if (pedido.getPagamentoCartao() == null) {
 				throw new RuntimeException("Pedido ainda não foi pago");
