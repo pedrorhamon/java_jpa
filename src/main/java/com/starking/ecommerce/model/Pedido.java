@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.starking.ecommerce.model.enums.StatusPedido;
@@ -65,4 +67,14 @@ public class Pedido {
     
     @OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itemPedidos; 
+    
+    @PrePersist
+    public void aoPersistir() {
+    	dataConclusao = LocalDateTime.now();
+    }
+    
+    @PreUpdate
+    public void aoAtualizar() {
+    	dataPedido = LocalDateTime.now();
+    }
 }
