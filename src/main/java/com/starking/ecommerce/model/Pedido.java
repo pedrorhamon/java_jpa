@@ -77,4 +77,14 @@ public class Pedido {
     public void aoAtualizar() {
     	dataPedido = LocalDateTime.now();
     }
+    
+    @PrePersist
+    @PreUpdate
+    public void calcularTotal() {
+    	if(itemPedidos != null) {
+    		total = itemPedidos.stream()
+    				.map(ItemPedido::getPrecoProduto)
+    				.reduce(BigDecimal.ZERO, BigDecimal::add);
+    	}
+    }
 }
