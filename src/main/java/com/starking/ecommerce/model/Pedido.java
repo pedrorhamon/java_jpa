@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.starking.ecommerce.model.enums.StatusPedido;
+import com.starking.ecommerce.model.listener.GenericoListener;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,6 +32,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@EntityListeners({GenericoListener.class})
 @Table(name = "pedido")
 public class Pedido {
 
@@ -71,11 +74,13 @@ public class Pedido {
     @PrePersist
     public void aoPersistir() {
     	dataConclusao = LocalDateTime.now();
+    	calcularTotal();
     }
     
     @PreUpdate
     public void aoAtualizar() {
     	dataPedido = LocalDateTime.now();
+    	calcularTotal();
     }
     
     @PrePersist
@@ -86,5 +91,9 @@ public class Pedido {
     				.map(ItemPedido::getPrecoProduto)
     				.reduce(BigDecimal.ZERO, BigDecimal::add);
     	}
+    }
+    
+    public boolean isPago() {
+    	return StatusPedido.PAGO.equals(status);
     }
 }
