@@ -41,10 +41,10 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "data_pedido")
+    @Column(name = "data_pedido", updatable = false)
     private LocalDateTime dataPedido;
 
-    @Column(name = "data_conclusao")
+    @Column(name = "data_conclusao", insertable = false)
     private LocalDateTime dataConclusao;
     
     @ManyToOne(optional = false)

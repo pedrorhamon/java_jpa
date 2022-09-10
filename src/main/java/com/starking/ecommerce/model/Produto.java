@@ -2,6 +2,7 @@ package com.starking.ecommerce.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -43,6 +44,12 @@ public class Produto implements Serializable {
 	@Column(name = "preco")
 	private BigDecimal preco;
 	
+	@Column(name = "data_criacao", updatable = false)
+    private LocalDateTime dataCriacao;
+
+    @Column(name = "data_ultima_atualizacao", insertable = false)
+    private LocalDateTime dataUltimaAtualizacao;
+
 	@OneToMany
 	private List<ItemPedido> itemPedidos; 
 	
