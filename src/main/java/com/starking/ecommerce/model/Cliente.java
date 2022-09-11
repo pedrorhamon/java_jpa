@@ -10,7 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.starking.ecommerce.model.enums.SexoCliente;
 
@@ -33,6 +35,9 @@ public class Cliente {
 	@Column(name = "nome")
 	private String nome;
 	
+	@Transient
+	private String primeiroNome;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "sexo_cliente")
 	private SexoCliente sexoCliente;
@@ -40,4 +45,13 @@ public class Cliente {
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
 	
+	@PostLoad
+	public void configurarPrimeiroNome() {
+		if(nome != null && !nome.isBlank()) {
+			int index = nome.indexOf(" ");
+			if(index > -1) {
+				primeiroNome = nome.substring(0, index);
+			}
+		}
+	}
 }
