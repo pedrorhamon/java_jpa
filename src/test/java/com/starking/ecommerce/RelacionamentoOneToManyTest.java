@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.ItemPedido;
+import com.starking.ecommerce.model.ItemPedidoId;
 import com.starking.ecommerce.model.Pedido;
 import com.starking.ecommerce.model.Produto;
 import com.starking.ecommerce.model.enums.StatusPedido;
@@ -48,6 +49,7 @@ public class RelacionamentoOneToManyTest extends EntityManagerTest {
         pedido.setCliente(cliente);
 
         ItemPedido itemPedido = new ItemPedido();
+        itemPedido.setId(new ItemPedidoId());
         itemPedido.setPrecoProduto(produto.getPreco());
         itemPedido.setQuantidade(1);
         itemPedido.setPedido(pedido);
