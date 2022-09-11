@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.ItemPedido;
+import com.starking.ecommerce.model.ItemPedidoId;
 import com.starking.ecommerce.model.Pedido;
 import com.starking.ecommerce.model.Produto;
 import com.starking.ecommerce.model.enums.StatusPedido;
@@ -48,20 +49,22 @@ public class RelacionamentoManyToOneTest extends EntityManagerTest {
 		pedido.setCliente(cliente);
 
 		ItemPedido itemPedido = new ItemPedido();
-		itemPedido.setPrecoProduto(produto.getPreco());
-		itemPedido.setQuantidade(1);
-		itemPedido.setPedido(pedido);
-		itemPedido.setProduto(produto);
+        itemPedido.setPedidoId(pedido.getId());
+        itemPedido.setProdutoId(produto.getId());
+        itemPedido.setPrecoProduto(produto.getPreco());
+        itemPedido.setQuantidade(1);
+        itemPedido.setPedido(pedido);
+        itemPedido.setProduto(produto);
 
-		entityManager.getTransaction().begin();
-		entityManager.persist(pedido);
-		entityManager.persist(itemPedido);
-		entityManager.getTransaction().commit();
+        entityManager.persist(itemPedido);
 
-		entityManager.clear();
+        entityManager.getTransaction().commit();
 
-		ItemPedido itemPedidoVerificacao = entityManager.find(ItemPedido.class, itemPedido.getId());
-		Assert.assertNotNull(itemPedidoVerificacao.getPedido());
-		Assert.assertNotNull(itemPedidoVerificacao.getProduto());
+        entityManager.clear();
+
+        ItemPedido itemPedidoVerificacao = entityManager.find(
+                ItemPedido.class, new ItemPedidoId(pedido.getId(), produto.getId()));
+        Assert.assertNotNull(itemPedidoVerificacao.getPedido());
+        Assert.assertNotNull(itemPedidoVerificacao.getProduto());
 	}
 }
