@@ -1,11 +1,13 @@
 package com.starking.ecommerce;
 
+import java.io.IOException;
 import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
+import com.starking.ecommerce.mapeamentoavancao.SalvandoArquivosTest;
 import com.starking.ecommerce.model.NotaFiscal;
 import com.starking.ecommerce.model.PagamentoCartao;
 import com.starking.ecommerce.model.Pedido;
@@ -37,7 +39,7 @@ public class RelacionamentoOneToOneTest extends EntityManagerTest {
         Pedido pedido = entityManager.find(Pedido.class, 1);
 
         NotaFiscal notaFiscal = new NotaFiscal();
-        notaFiscal.setXml("TESTE");
+        notaFiscal.setXml(carregarNotaFiscal());
         notaFiscal.setDataEmissao(new Date());
         notaFiscal.setPedido(pedido);
 
@@ -49,5 +51,14 @@ public class RelacionamentoOneToOneTest extends EntityManagerTest {
 
         Pedido pedidoVerificacao = entityManager.find(Pedido.class, pedido.getId());
         Assert.assertNotNull(pedidoVerificacao.getNotaFiscal());
+    }
+    
+    private static byte[] carregarNotaFiscal() {
+        try {
+            return SalvandoArquivosTest.class.getResourceAsStream(
+                    "/nota-fiscal.xml").readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
