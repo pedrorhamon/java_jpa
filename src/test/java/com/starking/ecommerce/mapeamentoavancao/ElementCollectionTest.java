@@ -1,12 +1,14 @@
 package com.starking.ecommerce.mapeamentoavancao;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Atributo;
+import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.Produto;
 
 public class ElementCollectionTest extends EntityManagerTest {
@@ -39,5 +41,21 @@ public class ElementCollectionTest extends EntityManagerTest {
 
         Produto produtoVerificacao = entityManager.find(Produto.class, produto.getId());
         Assert.assertFalse(produtoVerificacao.getAtributos().isEmpty());
+    }
+    
+    @Test
+    public void aplicarContato() {
+        entityManager.getTransaction().begin();
+
+        Cliente cliente = entityManager.find(Cliente.class, 1);
+        cliente.setContatos(Collections.singletonMap("email", "fernando@email.com"));
+
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Cliente clienteVerificacao = entityManager.find(Cliente.class, cliente.getId());
+        Assert.assertEquals(
+                "fernando@email.com", clienteVerificacao.getContatos().get("email"));
     }
 }
