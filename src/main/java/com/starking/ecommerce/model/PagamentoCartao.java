@@ -23,7 +23,7 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "pagamento_cartao")
-public class PagamentoCartao {
+public class PagamentoCartao  {
 
     @EqualsAndHashCode.Include
     @Id

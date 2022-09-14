@@ -1,5 +1,6 @@
 package com.starking.ecommerce.model;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -9,39 +10,40 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.starking.ecommerce.model.enums.SexoCliente;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SecondaryTable(name = "cliente_detalhe", pkJoinColumns = @PrimaryKeyJoinColumn(name = "cliente_id"))
+@Entity
 @Table(name = "cliente")
-public class Cliente {
+public class Cliente extends EntidadeBaseInteger {
 
-	@Id
-	@EqualsAndHashCode.Include
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+//	@Id
+//	@EqualsAndHashCode.Include
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Integer id;
 
 	@Column(name = "nome")
 	private String nome;
 	
 	@Transient
 	private String primeiroNome;
+	
+	@Column(name = "data_nascimento", table = "cliente_detalhe")
+	private LocalDate dataNascimento;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "sexo_cliente")

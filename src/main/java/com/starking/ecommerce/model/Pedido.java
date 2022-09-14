@@ -10,9 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -24,22 +21,20 @@ import javax.persistence.Table;
 import com.starking.ecommerce.model.enums.StatusPedido;
 import com.starking.ecommerce.model.listener.GenericoListener;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @EntityListeners({GenericoListener.class})
 @Table(name = "pedido")
-public class Pedido {
+public class Pedido  extends EntidadeBaseInteger{
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+//    @EqualsAndHashCode.Include
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
 
     @Column(name = "data_pedido", updatable = false)
     private LocalDateTime dataPedido;
