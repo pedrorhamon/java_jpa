@@ -23,7 +23,7 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "pagamento")
 @Entity
-public abstract class Pagamento extends EntidadeBaseInteger {
+public abstract class Pagamento extends EntidadeBaseInteger{
 
     @MapsId
     @OneToOne(optional = false)
