@@ -24,7 +24,6 @@ public class NotaFiscal {
 
     @EqualsAndHashCode.Include
     @Id
-    @Column(name = "pedido_id")
     private Integer id;
 
     @MapsId
