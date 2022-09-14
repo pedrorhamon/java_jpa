@@ -14,81 +14,106 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.starking.ecommerce.model.enums.StatusPedido;
 import com.starking.ecommerce.model.listener.GenericoListener;
+import com.starking.ecommerce.model.listener.GerarNotaFiscalListener;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@EntityListeners({ GerarNotaFiscalListener.class, GenericoListener.class })
 @Entity
-@EntityListeners({GenericoListener.class})
 @Table(name = "pedido")
-public class Pedido  extends EntidadeBaseInteger{
+public class Pedido extends EntidadeBaseInteger {
 
-//    @EqualsAndHashCode.Include
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
-
-    @Column(name = "data_pedido", updatable = false)
-    private LocalDateTime dataPedido;
-
-    @Column(name = "data_conclusao", insertable = false)
-    private LocalDateTime dataConclusao;
-    
     @ManyToOne(optional = false)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @Column(name = "total")
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itens;
+
+    @Column(name = "data_criacao", updatable = false)
+    private LocalDateTime dataCriacao;
+
+    @Column(name = "data_ultima_atualizacao", insertable = false)
+    private LocalDateTime dataUltimaAtualizacao;
+
+    @Column(name = "data_conclusao")
+    private LocalDateTime dataConclusao;
+
+    @OneToOne(mappedBy = "pedido")
+    private NotaFiscal notaFiscal;
+
     private BigDecimal total;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
     private StatusPedido status;
-    
+
     @OneToOne(mappedBy = "pedido")
-    @JoinColumn(name = "pagamento_cartao")
-    private PagamentoCartao pagamentoCartao;
-    
-    @OneToOne(mappedBy = "pedido")
-    private NotaFiscal notaFiscal;
-    
+    private Pagamento pagamento;
+
     @Embedded
-    private Endereco endereco;
-    
-    @OneToMany(mappedBy = "pedido")
-	private List<ItemPedido> itemPedidos; 
-    
+    private Endereco enderecoEntrega;
+
+    public boolean isPago() {
+        return StatusPedido.PAGO.equals(status);
+    }
+
+//    @PrePersist
+//    @PreUpdate
+    public void calcularTotal() {
+        if (itens != null) {
+            total = itens.stream().map(ItemPedido::getPrecoProduto)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+    }
+
     @PrePersist
     public void aoPersistir() {
-    	dataConclusao = LocalDateTime.now();
-    	calcularTotal();
+        dataCriacao = LocalDateTime.now();
+        calcularTotal();
     }
-    
+
     @PreUpdate
     public void aoAtualizar() {
-    	dataPedido = LocalDateTime.now();
-    	calcularTotal();
+        dataUltimaAtualizacao = LocalDateTime.now();
+        calcularTotal();
     }
-    
-    @PrePersist
-    @PreUpdate
-    public void calcularTotal() {
-    	if(itemPedidos != null) {
-    		total = itemPedidos.stream()
-    				.map(ItemPedido::getPrecoProduto)
-    				.reduce(BigDecimal.ZERO, BigDecimal::add);
-    	}
+
+    @PostPersist
+    public void aposPersistir() {
+        System.out.println("Após persistir Pedido.");
     }
-    
-    public boolean isPago() {
-    	return StatusPedido.PAGO.equals(status);
+
+    @PostUpdate
+    public void aposAtualizar() {
+        System.out.println("Após atualizar Pedido.");
+    }
+
+    @PreRemove
+    public void aoRemover() {
+        System.out.println("Antes de remover Pedido.");
+    }
+
+    @PostRemove
+    public void aposRemover() {
+        System.out.println("Após remover Pedido.");
+    }
+
+    @PostLoad
+    public void aoCarregar() {
+        System.out.println("Após carregar o Pedido.");
     }
 }

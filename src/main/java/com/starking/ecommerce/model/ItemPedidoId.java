@@ -19,16 +19,13 @@ import lombok.Setter;
 @Embeddable
 public class ItemPedidoId implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4074736077736632917L;
 
 	@EqualsAndHashCode.Include
-	@Column(name = "pedido_id")
-//	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer pedidoId;
+    @Column(name = "pedido_id")
+    private Integer pedidoId;
 
-	@EqualsAndHashCode.Include
-	@Column(name = "produto_id")
-//	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer produtoId;
-
+    @EqualsAndHashCode.Include
+    @Column(name = "produto_id")
+    private Integer produtoId;
 }

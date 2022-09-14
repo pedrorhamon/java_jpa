@@ -28,10 +28,10 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
 
         Pedido pedido = new Pedido();
         // pedido.setId(1); Comentado porque estamos utilizando IDENTITY
-        pedido.setDataPedido(LocalDateTime.now());
+        pedido.setDataCriacao(LocalDateTime.now());
         pedido.setStatus(StatusPedido.AGUARDANDO);
         pedido.setTotal(new BigDecimal(1000));
-        pedido.setEndereco(endereco);
+        pedido.setEnderecoEntrega(endereco);
         pedido.setCliente(cliente);
 
         entityManager.getTransaction().begin();
@@ -42,7 +42,7 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
 
         Pedido pedidoVerificacao = entityManager.find(Pedido.class, pedido.getId());
         Assert.assertNotNull(pedidoVerificacao);
-        Assert.assertNotNull(pedidoVerificacao.getEndereco());
-        Assert.assertNotNull(pedidoVerificacao.getEndereco().getCep());
+        Assert.assertNotNull(pedidoVerificacao.getEnderecoEntrega());
+        Assert.assertNotNull(pedidoVerificacao.getEnderecoEntrega().getCep());
     }
 }

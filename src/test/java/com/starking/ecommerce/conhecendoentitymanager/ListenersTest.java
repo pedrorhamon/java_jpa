@@ -39,6 +39,6 @@ public class ListenersTest extends EntityManagerTest {
 
         Pedido pedidoVerificacao = entityManager.find(Pedido.class, pedido.getId());
         Assert.assertNotNull(pedidoVerificacao.getDataConclusao());
-        Assert.assertNotNull(pedidoVerificacao.getDataPedido());
+        Assert.assertNotNull(pedidoVerificacao.getDataCriacao());
     }
 }

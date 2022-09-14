@@ -20,16 +20,16 @@ import lombok.Setter;
 @Entity
 @Table(name = "item_pedido")
 public class ItemPedido {
-    
-	@EmbeddedId	
+
+    @EmbeddedId
     private ItemPedidoId id;
 
-	@MapsId("pedidoId")
+    @MapsId("pedidoId")
     @ManyToOne(optional = false)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
-    
-	@MapsId("produtoId")
+
+    @MapsId("produtoId")
     @ManyToOne(optional = false)
     @JoinColumn(name = "produto_id")
     private Produto produto;
@@ -37,6 +37,5 @@ public class ItemPedido {
     @Column(name = "preco_produto")
     private BigDecimal precoProduto;
 
-    @Column(name = "quantidade")
     private Integer quantidade;
 }
