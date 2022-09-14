@@ -19,8 +19,8 @@ import lombok.Setter;
 @Table(name = "nota_fiscal")
 public class NotaFiscal extends EntidadeBaseInteger {
 
+	@OneToOne(optional = false)
     @MapsId
-    @OneToOne(optional = false)
     @JoinColumn(name = "pedido_id")
 //    @JoinTable(name = "pedido_nota_fiscal",
 //            joinColumns = @JoinColumn(name = "nota_fiscal_id", unique = true),
