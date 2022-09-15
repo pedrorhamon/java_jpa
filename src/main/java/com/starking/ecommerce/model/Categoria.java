@@ -34,7 +34,7 @@ public class Categoria extends EntidadeBaseInteger{
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Integer id;
 
-	@Column(name = "nome")
+	@Column(name = "nome", length = 100, nullable = false)
 	private String nome;
 
 	@ManyToOne

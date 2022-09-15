@@ -34,8 +34,9 @@ public class ItemPedido {
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
-    @Column(name = "preco_produto")
+    @Column(name = "preco_produto", columnDefinition = "decimal(19,2) not null")
     private BigDecimal precoProduto;
 
+    @Column(columnDefinition = "integer not null")
     private Integer quantidade;
 }

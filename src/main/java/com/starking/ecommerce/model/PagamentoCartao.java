@@ -15,6 +15,6 @@ import lombok.Setter;
 @Table(name="pagamento_cartao")
 public class PagamentoCartao extends Pagamento {
 
-    @Column(name = "numero_cartao")
+    @Column(name = "numero_cartao", columnDefinition = "varchar(100) not null")
     private String numeroCartao;
 }

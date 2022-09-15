@@ -1,5 +1,6 @@
 package com.starking.ecommerce.model;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -31,5 +32,6 @@ public abstract class Pagamento extends EntidadeBaseInteger{
     private Pedido pedido;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "varchar(30) not null")
     private StatusPagamento status;
 }

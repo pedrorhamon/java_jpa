@@ -67,7 +67,7 @@ public class Produto extends EntidadeBaseInteger implements Serializable {
 	@ElementCollection
 	@CollectionTable(name = "produto_tag",
 	joinColumns = @JoinColumn(name="produto_id"))
-	@Column(name = "tag")
+	@Column(name = "tag", columnDefinition = "varchar(50) not null")
 	private List<String> tags;
 	
 	@ElementCollection

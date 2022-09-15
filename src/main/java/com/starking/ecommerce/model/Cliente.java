@@ -39,7 +39,7 @@ public class Cliente extends EntidadeBaseInteger {
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Integer id;
 
-	@Column(name = "nome")
+	@Column(name = "nome", length = 100, nullable = false)
 	private String nome;
 	
 	@Transient
@@ -49,7 +49,7 @@ public class Cliente extends EntidadeBaseInteger {
 	private LocalDate dataNascimento;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "sexo_cliente")
+	@Column(name = "sexo_cliente", length = 30, nullable = false)
 	private SexoCliente sexoCliente;
 	
 	@OneToMany(mappedBy = "cliente")
