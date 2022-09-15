@@ -25,7 +25,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "produto", uniqueConstraints = { @UniqueConstraint(name = "unq_nome", columnNames = { "nome" }) },
+@Table(name = "produto", uniqueConstraints = { 
+		@UniqueConstraint(name = "unq_nome", columnNames = { "nome" }) },
 indexes = { @Index(name = "idx_nome", columnList = "nome") })
 public class Produto extends EntidadeBaseInteger implements Serializable {
 
@@ -36,13 +37,13 @@ public class Produto extends EntidadeBaseInteger implements Serializable {
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Integer id;
 
-	@Column(name = "nome")
+	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
 
-	@Column(name = "descricao")
+	@Column(name = "descricao", columnDefinition = "varchar(275) not null default 'descricao'")
 	private String descricao;
 
-	@Column(name = "preco")
+	@Column(name = "preco", precision = 19,scale = 2)
 	private BigDecimal preco;
 	
 	@Column(name = "data_criacao", updatable = false)

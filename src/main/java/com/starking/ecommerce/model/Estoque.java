@@ -1,5 +1,6 @@
 package com.starking.ecommerce.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -18,5 +19,6 @@ public class Estoque extends EntidadeBaseInteger {
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
+    @Column(columnDefinition = "integer not null", nullable = false)
     private Integer quantidade;
 }
