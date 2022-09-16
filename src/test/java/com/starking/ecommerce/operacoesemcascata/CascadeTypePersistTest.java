@@ -29,6 +29,7 @@ public class CascadeTypePersistTest extends EntityManagerTest {
 		produto.setDescricao("A melhor qualidade de homem");
 		
 		Categoria categoria = new Categoria();
+		categoria.setId(2);
         categoria.setNome("Áudio");
 
         produto.setCategorias(Arrays.asList(categoria)); // CascadeType.PERSIST
