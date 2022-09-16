@@ -58,8 +58,8 @@ public class Produto extends EntidadeBaseInteger implements Serializable {
 	
 	@ManyToMany
 	@JoinTable(name = "produto_categoria", 
-	joinColumns = @JoinColumn(name="produto_id", nullable = false, foreignKey = @ForeignKey(name="fk_categoria_produto")),
-	inverseJoinColumns = @JoinColumn(name="categoria_id"))
+	joinColumns = @JoinColumn(name="produto_id", nullable = false, foreignKey = @ForeignKey(name="fk_produto_categoria_produto")),
+	inverseJoinColumns = @JoinColumn(name="categoria_id", nullable = false, foreignKey = @ForeignKey(name="fk_produto_categoria_categoria")))
 	private List<Categoria> categorias;
 	
 	@OneToOne(mappedBy = "produto")
