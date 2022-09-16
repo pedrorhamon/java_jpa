@@ -42,6 +42,9 @@ public class Cliente extends EntidadeBaseInteger {
 	@Column(name = "nome", length = 100, nullable = false)
 	private String nome;
 	
+	@Column(length = 14, nullable = false)
+    private String cpf;
+	
 	@Transient
 	private String primeiroNome;
 	

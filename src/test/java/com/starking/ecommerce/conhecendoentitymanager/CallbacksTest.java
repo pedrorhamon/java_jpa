@@ -1,5 +1,8 @@
 package com.starking.ecommerce.conhecendoentitymanager;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +18,8 @@ public class CallbacksTest extends EntityManagerTest {
         Cliente cliente = entityManager.find(Cliente.class, 1);
 
         Pedido pedido = new Pedido();
-
+        pedido.setDataCriacao(LocalDateTime.now());
+        pedido.setTotal(BigDecimal.valueOf(50));
         pedido.setCliente(cliente);
         pedido.setStatus(StatusPedido.AGUARDANDO);
 

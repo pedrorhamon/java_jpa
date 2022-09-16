@@ -6,6 +6,7 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.Produto;
+import com.starking.ecommerce.model.enums.SexoCliente;
 
 public class CrudClienteTest extends EntityManagerTest {
 
@@ -13,8 +14,10 @@ public class CrudClienteTest extends EntityManagerTest {
 	public void inserirRegistro() {
 		Cliente cliente = new Cliente();
 
-//        cliente.setId(3);
+//	        cliente.setId(3);
 		cliente.setNome("José Lucas");
+		cliente.setSexoCliente(SexoCliente.MASCULINO);
+		cliente.setCpf("333");
 
 		entityManager.getTransaction().begin();
 		entityManager.persist(cliente);
@@ -27,7 +30,7 @@ public class CrudClienteTest extends EntityManagerTest {
 	}
 
 	@Test
-	public void buscarPorIdentificador() {
+	public void busarPorIdentificador() {
 		Produto produto = entityManager.find(Produto.class, 1);
 
 		Assert.assertNotNull(produto);
@@ -40,6 +43,8 @@ public class CrudClienteTest extends EntityManagerTest {
 
 		cliente.setId(1);
 		cliente.setNome("Fernando Medeiros Silva");
+		cliente.setCpf("000");
+		cliente.setSexoCliente(SexoCliente.MASCULINO);
 
 		entityManager.getTransaction().begin();
 		entityManager.merge(cliente);

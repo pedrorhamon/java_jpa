@@ -1,6 +1,7 @@
 package com.starking.ecommerce.mapeamento;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,9 +9,9 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Produto;
 
-public class OperacaoComTransacaoTest extends EntityManagerTest {
-	
-	@Test
+public class OperacoesComTransacaoTest extends EntityManagerTest {
+
+    @Test
     public void impedirOperacaoComBancoDeDados() {
         Produto produto = entityManager.find(Produto.class, 1);
         entityManager.detach(produto);
@@ -33,6 +34,7 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
         produtoPersist.setNome("Smartphone One Plus");
         produtoPersist.setDescricao("O processador mais rápido.");
         produtoPersist.setPreco(new BigDecimal(2000));
+        produtoPersist.setDataCriacao(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         entityManager.persist(produtoPersist);
@@ -52,6 +54,7 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
         produtoMerge.setNome("Notebook Dell");
         produtoMerge.setDescricao("O melhor da categoria.");
         produtoMerge.setPreco(new BigDecimal(2000));
+        produtoMerge.setDataCriacao(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         produtoMerge = entityManager.merge(produtoMerge);
@@ -72,6 +75,7 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
         produto.setNome("Microfone Rode Videmic");
         produto.setDescricao("A melhor qualidade de som.");
         produto.setPreco(new BigDecimal(1000));
+        produto.setDataCriacao(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         Produto produtoSalvo = entityManager.merge(produto);
@@ -139,6 +143,7 @@ public class OperacaoComTransacaoTest extends EntityManagerTest {
         produto.setNome("Câmera Canon");
         produto.setDescricao("A melhor definição para suas fotos.");
         produto.setPreco(new BigDecimal(5000));
+        produto.setDataCriacao(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         entityManager.persist(produto);

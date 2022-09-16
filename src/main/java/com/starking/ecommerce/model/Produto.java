@@ -40,7 +40,7 @@ public class Produto extends EntidadeBaseInteger implements Serializable {
 	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
 
-	@Column(name = "descricao", columnDefinition = "varchar(275) not null default 'descricao'")
+	@Lob
 	private String descricao;
 
 	@Column(name = "preco", precision = 19,scale = 2)

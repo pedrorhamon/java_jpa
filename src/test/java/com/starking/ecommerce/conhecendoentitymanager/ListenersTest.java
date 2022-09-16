@@ -1,5 +1,8 @@
 package com.starking.ecommerce.conhecendoentitymanager;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,8 +14,7 @@ import com.starking.ecommerce.model.enums.StatusPedido;
 
 public class ListenersTest extends EntityManagerTest {
 
-    @SuppressWarnings("unused")
-	@Test
+    @Test
     public void carregarEntidades() {
         Produto produto = entityManager.find(Produto.class, 1);
         Pedido pedido = entityManager.find(Pedido.class, 1);
@@ -23,9 +25,10 @@ public class ListenersTest extends EntityManagerTest {
         Cliente cliente = entityManager.find(Cliente.class, 1);
 
         Pedido pedido = new Pedido();
-
+        pedido.setDataCriacao(LocalDateTime.now());
         pedido.setCliente(cliente);
         pedido.setStatus(StatusPedido.AGUARDANDO);
+        pedido.setTotal(BigDecimal.TEN);
 
         entityManager.getTransaction().begin();
 
@@ -38,7 +41,7 @@ public class ListenersTest extends EntityManagerTest {
         entityManager.clear();
 
         Pedido pedidoVerificacao = entityManager.find(Pedido.class, pedido.getId());
-        Assert.assertNotNull(pedidoVerificacao.getDataConclusao());
         Assert.assertNotNull(pedidoVerificacao.getDataCriacao());
+        Assert.assertNotNull(pedidoVerificacao.getDataUltimaAtualizacao());
     }
 }
