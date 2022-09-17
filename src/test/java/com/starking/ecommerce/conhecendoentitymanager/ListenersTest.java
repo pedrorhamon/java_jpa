@@ -14,7 +14,8 @@ import com.starking.ecommerce.model.enums.StatusPedido;
 
 public class ListenersTest extends EntityManagerTest {
 
-    @Test
+    @SuppressWarnings("unused")
+	@Test
     public void carregarEntidades() {
         Produto produto = entityManager.find(Produto.class, 1);
         Pedido pedido = entityManager.find(Pedido.class, 1);

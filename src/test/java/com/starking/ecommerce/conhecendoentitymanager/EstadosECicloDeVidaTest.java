@@ -7,7 +7,8 @@ import com.starking.ecommerce.model.Categoria;
 
 public class EstadosECicloDeVidaTest extends EntityManagerTest {
 
-    @Test
+    @SuppressWarnings("unused")
+	@Test
     public void analisarEstados() {
         Categoria categoriaNovo = new Categoria();
         categoriaNovo.setNome("Eletrônicos");
