@@ -1,4 +1,4 @@
-package com.starking.ecommerce;
+package com.starking.ecommerce.relacionamentos;
 
 import org.junit.Test;
 
