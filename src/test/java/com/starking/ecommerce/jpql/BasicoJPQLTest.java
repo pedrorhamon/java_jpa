@@ -11,8 +11,20 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.Pedido;
+import com.starking.ecommerce.model.dto.ProdutoDTO;
 
 public class BasicoJPQLTest extends EntityManagerTest{
+	
+	@Test
+	public void projetarDTO() {
+		String jpql = "select new com.starking.ecommerce.model.dto.ProdutoDTO(id, nome) from Produto";
+		
+		TypedQuery<ProdutoDTO> typedQuery = entityManager.createQuery(jpql, ProdutoDTO.class);
+		List<ProdutoDTO> lista = typedQuery.getResultList();
+		Assert.assertTrue(lista.isEmpty());
+		
+		lista.forEach(p -> System.out.println(p.getId() + ", " + p.getNome()));
+	}
 	
 	@Test
 	public void projetarOResultado() {
