@@ -9,17 +9,25 @@ import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
 
-public class JoinTest extends EntityManagerTest{
-	
+public class JoinTest extends EntityManagerTest {
+
 	@Test
-	public void fazerJoin() {
-		String jpql = "select p, pag from Pedido p inner join p.pagamento pag ";
-		
+	public void fazerLeftJoin() {
+		String jpql = "select p, pag from Pedido p inner join p.pagamento pag";
+
 		TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
-		
+
 		List<Object[]> lista = typedQuery.getResultList();
-		Assert.assertTrue(lista.size() ==1);
-		
+		Assert.assertTrue(lista.size() == 1);
 	}
 
+	@Test
+	public void fazerJoin() {
+		String jpql = "select p, pag from Pedido p inner join p.pagamento pag";
+
+		TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+
+		List<Object[]> lista = typedQuery.getResultList();
+		Assert.assertTrue(lista.size() == 1);
+	}
 }
