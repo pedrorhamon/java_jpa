@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.NotaFiscal;
+import com.starking.ecommerce.model.Pedido;
+import com.starking.ecommerce.model.enums.StatusPagamento;
 
 public class PassandoParametrosTest extends EntityManagerTest {
 
@@ -24,4 +26,17 @@ public class PassandoParametrosTest extends EntityManagerTest {
 		List<NotaFiscal> lista = typedQuery.getResultList();
 		Assert.assertTrue(lista.size() == 1);
 	}
+	
+	@Test
+    public void passarParametro() {
+        String jpql = "select p from Pedido p join p.pagamento pag " +
+                " where p.id = :pedidoId and pag.status = ?1";
+
+        TypedQuery<Pedido> typedQuery = entityManager.createQuery(jpql, Pedido.class);
+        typedQuery.setParameter("pedidoId", 2);
+        typedQuery.setParameter(1, StatusPagamento.PROCESSANDO);
+
+        List<Pedido> lista = typedQuery.getResultList();
+        Assert.assertTrue(lista.size() == 1);
+    }
 }
