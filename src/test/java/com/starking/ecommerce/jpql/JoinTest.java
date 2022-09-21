@@ -13,7 +13,7 @@ public class JoinTest extends EntityManagerTest {
 
 	@Test
 	public void fazerLeftJoin() {
-		String jpql = "select p, pag from Pedido p inner join p.pagamento pag";
+		String jpql = "select p, pag from Pedido p left join p.pagamento pag";
 
 		TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
 
@@ -28,6 +28,6 @@ public class JoinTest extends EntityManagerTest {
 		TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
 
 		List<Object[]> lista = typedQuery.getResultList();
-		Assert.assertTrue(lista.size() == 1);
+		Assert.assertFalse(lista.isEmpty());
 	}
 }
