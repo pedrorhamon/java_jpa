@@ -16,6 +16,17 @@ import com.starking.ecommerce.model.dto.ProdutoDTO;
 public class BasicoJPQLTest extends EntityManagerTest{
 	
 	@Test
+	public void ordenarResultados() {
+		String jpql = "select c from Cliente c order by c.nome asc";
+
+		TypedQuery<Cliente> typedQuery = entityManager.createQuery(jpql, Cliente.class);
+		List<Cliente> lista = typedQuery.getResultList();
+		Assert.assertTrue(lista.isEmpty());
+
+		lista.forEach(p -> System.out.println(p.getId() + ", " + p.getNome()));
+	}
+	
+	@Test
 	public void projetarDTO() {
 		String jpql = "select new com.starking.ecommerce.model.dto.ProdutoDTO(id, nome) from Produto";
 		
