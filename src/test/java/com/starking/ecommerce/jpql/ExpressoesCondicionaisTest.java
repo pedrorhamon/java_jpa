@@ -16,6 +16,16 @@ import com.starking.ecommerce.model.Produto;
 public class ExpressoesCondicionaisTest extends EntityManagerTest{
 	
 	@Test
+    public void usarExpressaoCase() {
+        String jpql = "select p.id case p.status when 'PAGO' then 'Está pago' when 'CANCELADO' then 'Foi cancelado' else 'Está aguardando' end from Pedido p";
+
+        TypedQuery<Produto> typedQuery = entityManager.createQuery(jpql, Produto.class);
+
+        List<Produto> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+    }
+	   
+	@Test
     public void usarExpressaoDiferente() {
         String jpql = "select p from Produto p where p.preco <> 100";
 
