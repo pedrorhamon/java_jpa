@@ -17,7 +17,13 @@ public class ExpressoesCondicionaisTest extends EntityManagerTest{
 	
 	@Test
     public void usarExpressaoCase() {
-        String jpql = "select p.id case p.status when 'PAGO' then 'Está pago' when 'CANCELADO' then 'Foi cancelado' else 'Está aguardando' end from Pedido p";
+        String jpql = "select p.id case "
+        		+ "type(p.pagamento) "
+        		+ "when PagamentoBoleto then 'Pago com boleto' "
+        		+ "when PagamentoCartao then 'Pago com cartao' "
+        		+ "else 'Está aguardando' "
+        		+ "end "
+        		+ "from Pedido p";
 
         TypedQuery<Produto> typedQuery = entityManager.createQuery(jpql, Produto.class);
 
