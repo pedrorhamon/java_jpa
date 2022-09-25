@@ -27,7 +27,7 @@ public class ExpressoesCondicionaisTest extends EntityManagerTest{
 		String jpql = "select p from Pedido p where p.cliente in (:parametros)";
 		
 		TypedQuery<Pedido> typedQuery = entityManager.createQuery(jpql, Pedido.class);
-		typedQuery.setParameter("lista", parametros);
+		typedQuery.setParameter("parametros", parametros);
 		
         List<Pedido> lista = typedQuery.getResultList();
         Assert.assertFalse(lista.isEmpty());
