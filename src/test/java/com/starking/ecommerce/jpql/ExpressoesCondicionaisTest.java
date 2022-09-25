@@ -2,6 +2,7 @@ package com.starking.ecommerce.jpql;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -10,10 +11,27 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
+import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.Pedido;
 import com.starking.ecommerce.model.Produto;
 
 public class ExpressoesCondicionaisTest extends EntityManagerTest{
+	
+	@Test
+	public void usarExpressaoIN() {
+		Cliente cliente1 = entityManager.find(Cliente.class, 1);
+		Cliente cliente2 = entityManager.find(Cliente.class, 2);
+		
+		List<Cliente> parametros = Arrays.asList(cliente1, cliente2);
+		
+		String jpql = "select p from Pedido p where p.cliente in (:parametros)";
+		
+		TypedQuery<Pedido> typedQuery = entityManager.createQuery(jpql, Pedido.class);
+		typedQuery.setParameter("lista", parametros);
+		
+        List<Pedido> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+	}
 	
 	@Test
     public void usarExpressaoCase() {
