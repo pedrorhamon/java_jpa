@@ -15,6 +15,39 @@ import com.starking.ecommerce.model.Produto;
 public class SubqueriesTest extends EntityManagerTest {
 
 	@Test
+    public void pesquisarComAllExercicio() {
+        // Todos os produtos que sempre foram vendidos pelo mesmo preço.
+        String jpql = "select distinct p from ItemPedido ip join ip.produto p where " +
+                " ip.precoProduto = ALL " +
+                " (select precoProduto from ItemPedido where produto = p and id <> ip.id)";
+
+        TypedQuery<Produto> typedQuery = entityManager.createQuery(jpql, Produto.class);
+
+        List<Produto> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+
+        lista.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+	
+	@Test
+    public void pesquisarComAny() {
+        // Todos os produtos não foram vendidos mais depois que encareceram
+        String jpql = "select p from Produto p where " +
+                " p.preco <> ANY (select precoProduto from ItemPedido where produto = p)";
+
+        // Todos os produtos que sempre foram vendidos pelo preco atual.
+//        String jpql = "select p from Produto p where " +
+//                " p.preco = ANY (select precoProduto from ItemPedido where produto = p)";
+
+        TypedQuery<Produto> typedQuery = entityManager.createQuery(jpql, Produto.class);
+
+        List<Produto> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+
+        lista.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+	
+	@Test
     public void pesquisarComAll() {
         // Todos os produtos não foram vendidos mais depois que encareceram
         String jpql = "select p from Produto p where " +
