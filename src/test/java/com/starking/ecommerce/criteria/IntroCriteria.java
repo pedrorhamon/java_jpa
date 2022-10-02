@@ -13,9 +13,39 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.Pedido;
+import com.starking.ecommerce.model.Produto;
 
 public class IntroCriteria extends EntityManagerTest {
 
+	@Test
+	public void projetarOResultado() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		Root<Object[]> root = criteriaQuery.from(Object[].class);
+		
+		criteriaQuery.multiselect(root.get("id"), root.get("nome"));
+		
+		TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+		List<Object[]> lista = typedQuery.getResultList();
+		
+		Assert.assertFalse(lista.isEmpty());
+		
+		lista.forEach(arr -> System.out.println("ID: " + arr[0] + ", " + arr[1]));
+	}
+	
+	@Test
+    public void retornarTodosOsProdutosExercicio() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Produto> criteriaQuery = criteriaBuilder.createQuery(Produto.class);
+        Root<Produto> root = criteriaQuery.from(Produto.class);
+
+        criteriaQuery.select(root);
+
+        TypedQuery<Produto> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Produto> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+    }	
+	
 	@Test
 	public void selecionarUmAtributoParaRetorno() {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
