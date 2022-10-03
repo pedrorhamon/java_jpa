@@ -15,8 +15,26 @@ import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.ItemPedido;
 import com.starking.ecommerce.model.Pagamento;
 import com.starking.ecommerce.model.Pedido;
+import com.starking.ecommerce.model.enums.StatusPagamento;
 
 public class JoinCriteriaTest extends EntityManagerTest {
+	
+	@Test
+	public void fazerJoinComOn () {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
+		Root<Pedido> root = criteriaQuery.from(Pedido.class);
+		Join<Pedido, Pagamento> joinPagamento = root.join("pagamento");
+		Join<Pedido, ItemPedido> joinItens = root.join("itens");
+//      Join<ItemPedido, Produto> joinItemProduto = joinItens.join("produto");
+		joinPagamento.on(criteriaBuilder.equal(joinPagamento.get("status"), StatusPagamento.PROCESSANDO));
+		
+		criteriaQuery.select(root);
+		
+		TypedQuery<Pedido> typedQuery = entityManager.createQuery(criteriaQuery);
+		List<Pedido> lista = typedQuery.getResultList();
+		Assert.assertTrue(lista.size() == 4);
+	}
 	
 	@Test
 	public void fazerJoin() {
