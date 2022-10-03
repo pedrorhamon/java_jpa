@@ -2,6 +2,7 @@ package com.starking.ecommerce.criteria;
 
 import java.util.List;
 
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,6 +18,22 @@ import com.starking.ecommerce.model.Produto;
 
 public class IntroCriteria extends EntityManagerTest {
 
+	@Test
+	public void projetarOResultadoTuple() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
+		Root<Tuple> root = criteriaQuery.from(Tuple.class);
+		
+		criteriaQuery.select(criteriaBuilder.tuple(root.get("id").alias("id"), root.get("nome").alias("nome")));
+		
+		TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
+		List<Tuple> lista = typedQuery.getResultList();
+		
+		Assert.assertFalse(lista.isEmpty());
+		
+		lista.forEach(t -> System.out.println("ID: " + t.get("id") + ", " + t.get("nome")));
+	}
+	
 	@Test
 	public void projetarOResultado() {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
