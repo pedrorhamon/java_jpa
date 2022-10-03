@@ -13,12 +13,30 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
+import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.ItemPedido;
 import com.starking.ecommerce.model.Pagamento;
 import com.starking.ecommerce.model.Pedido;
 import com.starking.ecommerce.model.enums.StatusPagamento;
 
 public class JoinCriteriaTest extends EntityManagerTest {
+	
+	@Test
+	public void usarJoinFetch() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Cliente> criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
+		Root<Cliente> root = criteriaQuery.from(Cliente.class);
+		Join<Pedido, Cliente> join = (Join<Pedido, Cliente>) root.<Pedido, Cliente>fetch("clientes");
+		root.fetch("notaFiscal", JoinType.LEFT);
+		root.fetch("pagamento", JoinType.LEFT);
+		
+		criteriaQuery.select(root);
+		
+		TypedQuery<Cliente> typedQuery = entityManager.createQuery(criteriaQuery);
+		Cliente cliente = typedQuery.getSingleResult();
+		Assert.assertNotNull(cliente);
+		Assert.assertFalse(cliente.getPedidos().isEmpty());
+	}
 	
 	@Test
 	public void fazerLeftOuterJoin() {
