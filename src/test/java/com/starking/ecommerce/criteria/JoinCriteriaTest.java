@@ -17,9 +17,27 @@ import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.ItemPedido;
 import com.starking.ecommerce.model.Pagamento;
 import com.starking.ecommerce.model.Pedido;
+import com.starking.ecommerce.model.Produto;
 import com.starking.ecommerce.model.enums.StatusPagamento;
 
 public class JoinCriteriaTest extends EntityManagerTest {
+	
+	@Test
+	public void buscarPedidosComProdutoEspecifico() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
+		Root<Pedido> root = criteriaQuery.from(Pedido.class);
+		Join<ItemPedido, Produto> joinItemPedidoProduto = root.join("itens").join("produto");
+
+		criteriaQuery.select(root);
+
+		criteriaQuery.where(criteriaBuilder.equal(joinItemPedidoProduto.get("id"), 1));
+
+		TypedQuery<Pedido> typedQuery = entityManager.createQuery(criteriaQuery);
+
+		List<Pedido> lista = typedQuery.getResultList();
+		Assert.assertFalse(lista.isEmpty());
+	}
 	
 	@Test
 	public void usarJoinFetch() {
