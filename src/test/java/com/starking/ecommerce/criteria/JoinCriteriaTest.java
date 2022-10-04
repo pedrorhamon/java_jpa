@@ -15,8 +15,10 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.ItemPedido;
+import com.starking.ecommerce.model.ItemPedido_;
 import com.starking.ecommerce.model.Pagamento;
 import com.starking.ecommerce.model.Pedido;
+import com.starking.ecommerce.model.Pedido_;
 import com.starking.ecommerce.model.Produto;
 import com.starking.ecommerce.model.enums.StatusPagamento;
 
@@ -27,7 +29,7 @@ public class JoinCriteriaTest extends EntityManagerTest {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
 		Root<Pedido> root = criteriaQuery.from(Pedido.class);
-		Join<ItemPedido, Produto> joinItemPedidoProduto = root.join("itens").join("produto");
+		Join<ItemPedido, Produto> joinItemPedidoProduto = root.join(Pedido_.itens).join(ItemPedido_.produto);
 
 		criteriaQuery.select(root);
 
@@ -61,7 +63,7 @@ public class JoinCriteriaTest extends EntityManagerTest {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
 		Root<Pedido> root = criteriaQuery.from(Pedido.class);
-		Join<Pedido, Pagamento> joinPagamento = root.join("pagamento", JoinType.LEFT);
+		Join<Pedido, Pagamento> joinPagamento = root.join(Pedido_.pagamento, JoinType.LEFT);
 		
 		criteriaQuery.select(root);
 		
@@ -75,8 +77,8 @@ public class JoinCriteriaTest extends EntityManagerTest {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
 		Root<Pedido> root = criteriaQuery.from(Pedido.class);
-		Join<Pedido, Pagamento> joinPagamento = root.join("pagamento");
-		Join<Pedido, ItemPedido> joinItens = root.join("itens");
+		Join<Pedido, Pagamento> joinPagamento = root.join(Pedido_.pagamento);
+		Join<Pedido, ItemPedido> joinItens = root.join(Pedido_.itens);
 //      Join<ItemPedido, Produto> joinItemProduto = joinItens.join("produto");
 		joinPagamento.on(criteriaBuilder.equal(joinPagamento.get("status"), StatusPagamento.PROCESSANDO));
 		
@@ -92,8 +94,8 @@ public class JoinCriteriaTest extends EntityManagerTest {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
 		Root<Pedido> root = criteriaQuery.from(Pedido.class);
-		Join<Pedido, Pagamento> joinPagamento = root.join("pagamento");
-		Join<Pedido, ItemPedido> joinItens = root.join("itens");
+		Join<Pedido, Pagamento> joinPagamento = root.join(Pedido_.pagamento);
+		Join<Pedido, ItemPedido> joinItens = root.join(Pedido_.itens);
 //      Join<ItemPedido, Produto> joinItemProduto = joinItens.join("produto");
 		
 		criteriaQuery.select(root);
