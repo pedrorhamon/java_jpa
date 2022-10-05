@@ -1,5 +1,6 @@
 package com.starking.ecommerce.criteria;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -17,6 +18,27 @@ import com.starking.ecommerce.model.Produto;
 import com.starking.ecommerce.model.Produto_;
 
 public class ExpresoesCondicionaisCriteriaTest extends EntityManagerTest {
+	
+	@Test
+	public void usarMaiorMenor() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Produto> criteriaQuery = criteriaBuilder.createQuery(Produto.class);
+        Root<Produto> root = criteriaQuery.from(Produto.class);
+        
+        criteriaQuery.select(root);
+        
+        criteriaQuery.where(
+                criteriaBuilder.greaterThanOrEqualTo(
+                        root.get(Produto_.preco), new BigDecimal(799)),
+                criteriaBuilder.lessThanOrEqualTo(
+                        root.get(Produto_.preco), new BigDecimal(3500)));
+        
+        TypedQuery<Produto> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Produto> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+        
+        lista.forEach(p -> System.out.println("ID: " + p.getId() + ", " + p.getPreco()));
+	}
 	
 	@Test
 	public void usarIsEmpty() {
