@@ -13,8 +13,44 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Cliente;
 import com.starking.ecommerce.model.Cliente_;
+import com.starking.ecommerce.model.Produto;
+import com.starking.ecommerce.model.Produto_;
 
 public class ExpresoesCondicionaisCriteriaTest extends EntityManagerTest {
+	
+	@Test
+	public void usarIsEmpty() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Produto> criteriaQuery = criteriaBuilder.createQuery(Produto.class);
+        Root<Produto> root = criteriaQuery.from(Produto.class);
+        
+        criteriaQuery.select(root);
+        
+//        criteriaQuery.where(root.get(Produto_.categorias).isEmpty());
+        
+        criteriaQuery.where(criteriaBuilder.isEmpty(root.get(Produto_.categorias)));
+        
+        TypedQuery<Produto> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Produto> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+	}
+	
+	@Test
+	public void usarIsNull() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Produto> criteriaQuery = criteriaBuilder.createQuery(Produto.class);
+        Root<Produto> root = criteriaQuery.from(Produto.class);
+        
+        criteriaQuery.select(root);
+        
+//        criteriaQuery.where(root.get(Produto_.fotos).isNull());
+        
+        criteriaQuery.where(criteriaBuilder.isNull(root.get(Produto_.fotos)));
+        
+        TypedQuery<Produto> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Produto> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+	}
 	
 	@Test
     public void usarExpressaoCondicionalLike() {
@@ -24,11 +60,10 @@ public class ExpresoesCondicionaisCriteriaTest extends EntityManagerTest {
 
         criteriaQuery.select(root);
         
-        criteriaQuery.where(criteriaBuilder.like(root.get(Cliente_.nome), "%a"));
+        criteriaQuery.where(criteriaBuilder.like(root.get(Cliente_.nome), "%a%"));
 
         TypedQuery<Cliente> typedQuery = entityManager.createQuery(criteriaQuery);
         List<Cliente> lista = typedQuery.getResultList();
         Assert.assertFalse(lista.isEmpty());
     }
-
 }
