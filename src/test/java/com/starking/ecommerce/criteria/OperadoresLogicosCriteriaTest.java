@@ -12,11 +12,30 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
+import com.starking.ecommerce.model.Cliente;
+import com.starking.ecommerce.model.Cliente_;
 import com.starking.ecommerce.model.Pedido;
 import com.starking.ecommerce.model.Pedido_;
 import com.starking.ecommerce.model.enums.StatusPedido;
 
 public class OperadoresLogicosCriteriaTest extends EntityManagerTest {
+	
+	@Test
+    public void ordenarResultado() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Cliente> criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
+        Root<Cliente> root = criteriaQuery.from(Cliente.class);
+
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get(Cliente_.nome)));
+
+        TypedQuery<Cliente> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Cliente> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+
+        lista.forEach(c -> System.out.println(
+                "ID: " + c.getId() + ", Total: " + c.getNome()));
+    }
 	
 	@Test
     public void usarOperadores() {
@@ -47,5 +66,4 @@ public class OperadoresLogicosCriteriaTest extends EntityManagerTest {
         lista.forEach(p -> System.out.println(
                 "ID: " + p.getId() + ", Total: " + p.getTotal()));
     }
-
 }
