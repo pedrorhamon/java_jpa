@@ -95,5 +95,4 @@ public class FuncoesCriteriaTest extends EntityManagerTest {
                         + ", upper: " + arr[6]
                         + ", trim: |" + arr[7] + "|"));
     }
-
 }
