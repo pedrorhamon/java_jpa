@@ -14,13 +14,36 @@ import org.junit.Test;
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Categoria;
 import com.starking.ecommerce.model.Categoria_;
+import com.starking.ecommerce.model.Cliente;
+import com.starking.ecommerce.model.Cliente_;
 import com.starking.ecommerce.model.ItemPedido;
 import com.starking.ecommerce.model.ItemPedido_;
+import com.starking.ecommerce.model.Pedido;
+import com.starking.ecommerce.model.Pedido_;
 import com.starking.ecommerce.model.Produto;
 import com.starking.ecommerce.model.Produto_;
 
 public class GroupByCriteriaTest extends EntityManagerTest {
 
+	@Test
+    public void agruparResultado03Exercicio() {
+//        Total de vendas por cliente
+//        String jpql = "select c.nome, sum(ip.precoProduto) from ItemPedido ip " +
+//                " join ip.pedido p join p.cliente c " +
+//                " group by c.id";
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<ItemPedido> root = criteriaQuery.from(ItemPedido.class);
+        Join<ItemPedido, Pedido> joinPedido = root.join(ItemPedido_.pedido);
+        Join<Pedido, Cliente> joinPedidoCliente = joinPedido.join(Pedido_.cliente);
+
+        criteriaQuery.multiselect(
+                joinPedidoCliente.get(Cliente_.nome),
+                criteriaBuilder.sum(root.get(ItemPedido_.precoProduto))
+        );
+	}
+	
 	@Test
 	public void agruparResultado02() {
 //	        Total de vendas por categoria.
