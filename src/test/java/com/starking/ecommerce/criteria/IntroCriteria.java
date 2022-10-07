@@ -13,12 +13,46 @@ import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
 import com.starking.ecommerce.model.Cliente;
+import com.starking.ecommerce.model.Cliente_;
 import com.starking.ecommerce.model.Pedido;
+import com.starking.ecommerce.model.Pedido_;
 import com.starking.ecommerce.model.Produto;
 import com.starking.ecommerce.model.dto.ProdutoDTO;
 
 public class IntroCriteria extends EntityManagerTest {
 
+	@Test
+    public void usarDistinct() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
+        Root<Pedido> root = criteriaQuery.from(Pedido.class);
+        root.join(Pedido_.itens);
+
+        criteriaQuery.select(root);
+        criteriaQuery.distinct(true);
+
+        TypedQuery<Pedido> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Pedido> lista = typedQuery.getResultList();
+
+        lista.forEach(p -> System.out.println("ID: " + p.getId()));
+    }
+	
+	@Test
+	public void ordenarResultados() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Cliente> criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
+		Root<Cliente> root = criteriaQuery.from(Cliente.class);
+
+		criteriaQuery.orderBy(criteriaBuilder.desc(root.get(Cliente_.nome)));
+
+		TypedQuery<Cliente> typedQuery = entityManager.createQuery(criteriaQuery);
+
+		List<Cliente> lista = typedQuery.getResultList();
+		Assert.assertFalse(lista.isEmpty());
+
+		lista.forEach(c -> System.out.println(c.getId() + ", " + c.getNome()));
+	}
+	
 	@Test
 	public void projetarOResultadoDTO() {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
