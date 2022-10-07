@@ -23,6 +23,32 @@ import com.starking.ecommerce.model.Produto_;
 public class ExpresoesCondicionaisCriteriaTest extends EntityManagerTest {
 
 	@Test
+    public void usarExpressaoCase() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Pedido> root = criteriaQuery.from(Pedido.class);
+
+        criteriaQuery.multiselect(
+                root.get(Pedido_.id),
+//                criteriaBuilder.selectCase(root.get(Pedido_.STATUS))
+//                        .when(StatusPedido.PAGO.toString(), "Foi pago.")
+//                        .when(StatusPedido.AGUARDANDO.toString(), "Está aguardando.")
+//                        .otherwise(root.get(Pedido_.status))
+                criteriaBuilder.selectCase(root.get(Pedido_.pagamento).type().as(String.class))
+                        .when("boleto", "Foi pago com boleto.")
+                        .when("cartao", "Foi pago com cartão")
+                        .otherwise("Não identificado")
+        );
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Object[]> lista = typedQuery.getResultList();
+        Assert.assertFalse(lista.isEmpty());
+
+        lista.forEach(arr -> System.out.println(arr[0] + ", " + arr[1]));
+    }
+	
+	@Test
 	public void usarExpressaoDiferente() {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
