@@ -21,6 +21,34 @@ import com.starking.ecommerce.model.Produto_;
 public class SubqueriesCriteriaTest extends EntityManagerTest{
 	
 	@Test
+	public void pesquisarSubqueries03() {
+//      Bons clientes.
+//      String jpql = "select c from Cliente c where " +
+//              " 500 < (select sum(p.total) from Pedido p where p.cliente = c)";
+
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Pedido> criteriaQuery = criteriaBuilder.createQuery(Pedido.class);
+        Root<Pedido> root = criteriaQuery.from(Pedido.class);
+
+		criteriaQuery.select(root);
+		
+		Subquery<BigDecimal> subquery = criteriaQuery.subquery(BigDecimal.class);
+		Root<Pedido> subqueryRoot = subquery.from(Pedido.class);
+		subquery.select(criteriaBuilder.sum(subqueryRoot.get(Pedido_.total)));
+		subquery.where(criteriaBuilder.equal(root, subqueryRoot.get(Pedido_.cliente)));
+		
+		criteriaQuery.where(criteriaBuilder.greaterThan(subquery, new BigDecimal(500)));
+
+		TypedQuery<Pedido> typedQuery = entityManager.createQuery(criteriaQuery);
+
+		List<Pedido> lista = typedQuery.getResultList();
+		Assert.assertFalse(lista.isEmpty());
+
+		lista.forEach(obj -> System.out
+				.println("ID: " + obj.getId() + ", Total " + obj.getTotal()));
+	}
+	
+	@Test
 	public void pesquisarSubqueries02() {
 //      Todos os pedidos acima da média de vendas
 //     String jpql = "select p from Pedido p where " +
