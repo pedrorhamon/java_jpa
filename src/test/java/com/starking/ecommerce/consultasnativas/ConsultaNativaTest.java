@@ -19,5 +19,4 @@ public class ConsultaNativaTest extends EntityManagerTest{
 		
 		lista.stream().forEach(arry -> System.out.println(String.format("Produto => ID: %s, Nome: %s ", arry[0], arry[1])));
 	}
-
 }
