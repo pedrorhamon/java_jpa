@@ -7,11 +7,50 @@ import javax.persistence.Query;
 import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
+import com.starking.ecommerce.model.Categoria;
 import com.starking.ecommerce.model.ItemPedido;
 import com.starking.ecommerce.model.Produto;
+import com.starking.ecommerce.model.dto.CategoriaDTO;
 import com.starking.ecommerce.model.dto.ProdutoDTO;
 
 public class ConsultaNativaTest extends EntityManagerTest{
+	
+	@Test
+    public void mapearConsultaParaDTOEmArquivoExternoExercicio() {
+        Query query = entityManager.createNamedQuery("ecm_categoria.listar.dto");
+
+        List<CategoriaDTO> lista = query.getResultList();
+
+        lista.stream().forEach(obj -> System.out.println(
+                String.format("CategoriaDTO => ID: %s, Nome: %s", obj.getId(), obj.getNome())));
+    }
+	
+	@Test
+	public void usarSQLArquivoXML() {
+		Query query = entityManager.createNamedQuery("ecm_categoria.listar");
+		
+		List<Categoria> lista = query.getResultList();
+		
+		lista.stream().forEach(obj -> System.out.println(String.format("Categoria => ID: %s, Nome: %s ", obj.getId(), obj.getNome())));
+	}
+	
+	@Test
+	public void usarSQLUmNamedNativeQuery02() {
+		Query query = entityManager.createNamedQuery("ecm_produto.listar");
+		
+		List<ProdutoDTO> lista = query.getResultList();
+		
+		lista.stream().forEach(obj -> System.out.println(String.format("ProdutoDTO => ID: %s, Nome: %s ", obj.getId(), obj.getNome())));
+	}
+	
+	@Test
+	public void usarSQLUmNamedNativeQuery() {
+		Query query = entityManager.createNamedQuery("produto_loja.listar");
+		
+		List<ProdutoDTO> lista = query.getResultList();
+		
+		lista.stream().forEach(obj -> System.out.println(String.format("ProdutoDTO => ID: %s, Nome: %s ", obj.getId(), obj.getNome())));
+	}
 	
 	@Test
 	public void usarSQLColumnResult() {
