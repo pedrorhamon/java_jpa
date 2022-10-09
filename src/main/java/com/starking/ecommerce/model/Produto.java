@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -31,7 +32,16 @@ import lombok.Setter;
 @Entity
 @SqlResultSetMappings({
 	@SqlResultSetMapping(name = "produto_loja.Produto", entities = {@EntityResult(entityClass = Produto.class)}),
-	@SqlResultSetMapping(name = "item_pedido-produto.ItemPedido-Produto", entities = {@EntityResult(entityClass = Produto.class),
+	@SqlResultSetMapping(name = "ecm_produto.Produto", 
+	entities = {@EntityResult(entityClass = Produto.class, fields = {
+			@FieldResult(name = "id", column = "prd_id"),
+			@FieldResult(name = "nome", column = "prd_nome"),
+			@FieldResult(name = "descricao", column = "prd_descricao"),
+			@FieldResult(name = "preco", column = "prd_preco"),
+			@FieldResult(name = "foto", column = "prd_foto"),
+			@FieldResult(name = "dataCriacao", column = "prd_dataCriacao"),
+			@FieldResult(name = "dataUltimaAtualizacao", column = "prd_dataUltimaAtualizacao")
+	}),
 			@EntityResult(entityClass = ItemPedido.class)})
 })
 @Getter
