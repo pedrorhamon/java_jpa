@@ -9,6 +9,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SqlResultSetMapping;
+import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -26,6 +29,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@SqlResultSetMappings({
+	@SqlResultSetMapping(name = "produto_loja.Produto", entities = {@EntityResult(entityClass = Produto.class)}),
+	@SqlResultSetMapping(name = "item_pedido-produto.ItemPedido-Produto", entities = {@EntityResult(entityClass = Produto.class),
+			@EntityResult(entityClass = ItemPedido.class)})
+})
 @Getter
 @Setter
 @NamedQueries({
