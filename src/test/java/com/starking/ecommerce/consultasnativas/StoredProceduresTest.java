@@ -1,5 +1,7 @@
 package com.starking.ecommerce.consultasnativas;
 
+import java.util.List;
+
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
@@ -7,8 +9,22 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.starking.ecommerce.init.EntityManagerTest;
+import com.starking.ecommerce.model.Cliente;
 
 public class StoredProceduresTest extends EntityManagerTest {
+	
+	@Test
+	public void receberListaDaProcedure() {
+		StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("compraram_acima_media", Cliente.class);
+		
+		storedProcedureQuery.registerStoredProcedureParameter("ano", Integer.class, ParameterMode.IN);
+		
+		storedProcedureQuery.setParameter("ano", 2020);
+		
+		List<Cliente> lista = storedProcedureQuery.getResultList();
+		
+		Assert.assertFalse(lista.isEmpty());
+	}
 	
 	@Test
 	public void usarParametrosInEOut() {
@@ -24,5 +40,4 @@ public class StoredProceduresTest extends EntityManagerTest {
 		
 		Assert.assertEquals("Kindle", nome);
 	}
-
 }
