@@ -3,6 +3,7 @@ package com.starking.ecommerce.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,6 @@ public class Atributo {
 	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
 	
+	@NotBlank
 	private String valor;
 }

@@ -60,6 +60,7 @@ public class Pedido extends EntidadeBaseInteger {
     @Column(name = "data_ultima_atualizacao", insertable = false)
     private LocalDateTime dataUltimaAtualizacao;
 
+	@PastOrPresent
     @Column(name = "data_conclusao")
     private LocalDateTime dataConclusao;
 

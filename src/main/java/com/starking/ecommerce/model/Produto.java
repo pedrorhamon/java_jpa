@@ -29,6 +29,9 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import com.starking.ecommerce.model.dto.ProdutoDTO;
 
@@ -81,18 +84,23 @@ public class Produto extends EntidadeBaseInteger implements Serializable {
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Integer id;
 
+	@NotBlank
 	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
 
+	@NotBlank
 	@Lob
 	private String descricao;
 
+	@Positive
 	@Column(name = "preco", precision = 19,scale = 2)
 	private BigDecimal preco;
 	
+	@PositiveOrZero
 	@Column(name = "data_criacao", updatable = false)
     private LocalDateTime dataCriacao;
 
+	@PositiveOrZero
     @Column(name = "data_ultima_atualizacao", insertable = false)
     private LocalDateTime dataUltimaAtualizacao;
 

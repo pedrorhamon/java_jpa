@@ -25,6 +25,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -57,7 +58,7 @@ public class Cliente extends EntidadeBaseInteger {
 	private String nome;
 	
 	@CPF
-	@NotBlank(message = "CPF obrigatório")
+	@NotNull(message = "CPF obrigatório")
 	@Column(length = 14, nullable = false)
     private String cpf;
 	

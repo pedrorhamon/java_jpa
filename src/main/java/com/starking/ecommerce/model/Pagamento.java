@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.starking.ecommerce.model.enums.StatusPagamento;
 
@@ -27,11 +28,13 @@ import lombok.Setter;
 @Table(name = "pagamento")
 public abstract class Pagamento extends EntidadeBaseInteger{
 
+	@NotNull
     @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "pedido_id", nullable = false, foreignKey = @ForeignKey(name="fk_pagamento_pedido"))
     private Pedido pedido;
 
+	@NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "varchar(30) not null")
     private StatusPagamento status;
