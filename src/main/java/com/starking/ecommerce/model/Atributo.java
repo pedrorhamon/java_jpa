@@ -2,6 +2,7 @@ package com.starking.ecommerce.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Atributo {
 
+	@NotBlank
 	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
 	

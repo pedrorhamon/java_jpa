@@ -24,6 +24,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 
 import com.starking.ecommerce.model.enums.StatusPedido;
 import com.starking.ecommerce.model.listener.GenericoListener;
@@ -39,16 +43,20 @@ import lombok.Setter;
 @Table(name = "pedido")
 public class Pedido extends EntidadeBaseInteger {
 
+	@NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "cliente_id", nullable = false, foreignKey = @ForeignKey(name="fk_pedido_cliente"))
     private Cliente cliente;
 
+	@NotEmpty
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ItemPedido> itens;
 
+	@PastOrPresent
     @Column(name = "data_criacao", updatable = false)
     private LocalDateTime dataCriacao;
 
+	@PastOrPresent
     @Column(name = "data_ultima_atualizacao", insertable = false)
     private LocalDateTime dataUltimaAtualizacao;
 
@@ -58,6 +66,7 @@ public class Pedido extends EntidadeBaseInteger {
     @OneToOne(mappedBy = "pedido")
     private NotaFiscal notaFiscal;
 
+    @Positive
     @Column(precision = 19, scale = 2, nullable = false)
     private BigDecimal total;
 

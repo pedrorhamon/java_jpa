@@ -24,6 +24,9 @@ import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 import com.starking.ecommerce.model.enums.SexoCliente;
 
@@ -49,9 +52,12 @@ public class Cliente extends EntidadeBaseInteger {
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Integer id;
 
+	@NotBlank(message = "Nome obrigatório")
 	@Column(name = "nome", length = 100, nullable = false)
 	private String nome;
 	
+	@CPF
+	@NotBlank(message = "CPF obrigatório")
 	@Column(length = 14, nullable = false)
     private String cpf;
 	

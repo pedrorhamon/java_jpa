@@ -9,6 +9,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public class Categoria extends EntidadeBaseInteger{
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Integer id;
 
+	@NotBlank
 	@Column(name = "nome", length = 100, nullable = false)
 	private String nome;
 
