@@ -24,15 +24,22 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.engine.spi.PersistentAttributeInterceptable;
+import org.hibernate.engine.spi.PersistentAttributeInterceptor;
+
 import com.starking.ecommerce.model.enums.StatusPedido;
 import com.starking.ecommerce.model.listener.GenericoListener;
 import com.starking.ecommerce.model.listener.GerarNotaFiscalListener;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,7 +48,7 @@ import lombok.Setter;
 @EntityListeners({ GerarNotaFiscalListener.class, GenericoListener.class })
 @Entity
 @Table(name = "pedido")
-public class Pedido extends EntidadeBaseInteger {
+public class Pedido extends EntidadeBaseInteger implements PersistentAttributeInterceptable{
 
 	@NotNull
     @ManyToOne(optional = false)
@@ -64,6 +71,7 @@ public class Pedido extends EntidadeBaseInteger {
     @Column(name = "data_conclusao")
     private LocalDateTime dataConclusao;
 
+	@LazyToOne(LazyToOneOption.NO_PROXY)
     @OneToOne(mappedBy = "pedido")
     private NotaFiscal notaFiscal;
 
@@ -75,6 +83,7 @@ public class Pedido extends EntidadeBaseInteger {
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
 
+    @LazyToOne(LazyToOneOption.NO_PROXY)
     @OneToOne(mappedBy = "pedido")
     private Pagamento pagamento;
 
@@ -132,4 +141,52 @@ public class Pedido extends EntidadeBaseInteger {
     public void aoCarregar() {
         System.out.println("Ap�s carregar o Pedido.");
     }
+    
+    public NotaFiscal getNotaFiscal() {
+    	if (this.attributeInterceptor != null) {
+    		return (NotaFiscal) attributeInterceptor.readObject(this, "notaFiscal", this.notaFiscal);
+    	}
+    	
+    	return this.notaFiscal;
+    }
+    
+	public void setNotaFiscal(NotaFiscal notaFiscal) {
+		if (this.attributeInterceptor != null) {
+			this.notaFiscal = (NotaFiscal) attributeInterceptor.writeObject(this, "notaFiscal", this.notaFiscal, notaFiscal);
+		} else {			
+			this.notaFiscal = notaFiscal;
+		}
+	}
+    
+	public Pagamento getPagamento() {
+		if (this.attributeInterceptor != null) {
+			return (Pagamento) attributeInterceptor.readObject(this, "pagamento", this.pagamento);
+		}
+		return this.pagamento;
+	}
+    
+	public void setPagamento(Pagamento pagamento) {
+		if (this.attributeInterceptor != null) {
+			this.pagamento = (Pagamento) attributeInterceptor.writeObject(this, "pagamento", this.pagamento, pagamento);
+		} else {
+			this.pagamento = pagamento;
+		}
+	}
+    
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    @Transient
+    private PersistentAttributeInterceptor attributeInterceptor;
+
+	@Override
+	public PersistentAttributeInterceptor $$_hibernate_getInterceptor() {
+		return this.attributeInterceptor;
+	}
+
+	@Override
+	public void $$_hibernate_setInterceptor(PersistentAttributeInterceptor interceptor) {
+		this.attributeInterceptor = interceptor;
+	}
+    
+    
 }
