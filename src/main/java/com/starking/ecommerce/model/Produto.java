@@ -9,6 +9,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
+import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
@@ -30,9 +31,11 @@ import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.starking.ecommerce.model.converter.BooleanToSimNaoConverter;
 import com.starking.ecommerce.model.dto.ProdutoDTO;
 
 import lombok.Getter;
@@ -129,4 +132,9 @@ public class Produto extends EntidadeBaseInteger implements Serializable {
 	
 	@Lob
 	private byte[] fotos;
+	
+	@Convert(converter = BooleanToSimNaoConverter.class)
+	@NotNull
+	@Column(length = 3, updatable = false)
+	private Boolean ativo = Boolean.FALSE;
 }
