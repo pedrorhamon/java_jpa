@@ -20,10 +20,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SqlResultSetMapping;
@@ -78,6 +82,21 @@ import lombok.Setter;
 @Table(name = "produto", uniqueConstraints = { 
 		@UniqueConstraint(name = "unq_nome", columnNames = { "nome" }) },
 indexes = { @Index(name = "idx_nome", columnList = "nome") })
+@NamedEntityGraphs({
+	@NamedEntityGraph(name = "Pedido.dadosEssenciais", attributeNodes = {
+			@NamedAttributeNode("dataCriacao"),
+			@NamedAttributeNode("status"),
+			@NamedAttributeNode("total"),
+			@NamedAttributeNode(value = "cliente", subgraph = "cli")
+	},
+			subgraphs = {
+					@NamedSubgraph(name = "cli", attributeNodes = {
+							@NamedAttributeNode("nome"),
+							@NamedAttributeNode("cpf")
+					})
+			})
+
+})
 public class Produto extends EntidadeBaseInteger implements Serializable {
 
 	private static final long serialVersionUID = 1L;

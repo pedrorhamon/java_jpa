@@ -18,6 +18,28 @@ import com.starking.ecommerce.model.Pedido_;
 public class EntityGraphTest extends EntityManagerTest {
 	
 	@Test
+	public void buscarAtributosEssencialComNamedEntityGraph() { 
+		EntityGraph<?> entityGraph = entityManager.createEntityGraph("Pedido.dadosEssenciais");
+		
+//		entityGraph.addSubgraph("pagamento").addAttributeNodes("status");
+		
+		entityGraph.addAttributeNodes("pagamento");
+				
+//		Map<String, Object> properties = new HashMap<>();
+//		properties.put("javax.persistence.fetchgraph", entityGraph);
+//		properties.put("javax.persistence.loadgraph", entityGraph);
+		
+		TypedQuery<Pedido> typedQuery = entityManager.createQuery("select p from Pedido p", Pedido.class);
+		typedQuery.setHint("javax.persistence.fetchgraph", entityGraph);
+		List<Pedido> lista = typedQuery.getResultList();
+		
+		Assert.assertFalse(lista.isEmpty());
+		
+//		Pedido pedido = entityManager.find(Pedido.class, 1, properties);
+//		Assert.assertNotNull(pedido);
+	}
+	
+	@Test
 	public void buscarAtributosEssencialDePedido03() {
 		EntityGraph<Pedido> entityGraph = entityManager.createEntityGraph(Pedido.class);
 		entityGraph.addAttributeNodes(Pedido_.dataCriacao, Pedido_.status, Pedido_.total);
