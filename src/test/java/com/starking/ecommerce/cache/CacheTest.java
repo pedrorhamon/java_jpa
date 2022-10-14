@@ -36,7 +36,7 @@ public class CacheTest {
         // javax.persistence.cache.storeMode CacheStoreMode
 
         Cache cache = entityManagerFactory.getCache();
-
+        
         System.out.println("Buscando todos os pedidos..........................");
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         entityManager1.setProperty("javax.persistence.cache.storeMode", CacheStoreMode.BYPASS);
