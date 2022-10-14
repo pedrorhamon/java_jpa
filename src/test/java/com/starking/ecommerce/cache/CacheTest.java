@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -24,6 +25,21 @@ public class CacheTest {
 	public static void tearDownAfterClass() {
 		entityManagerFactory.close();
 	}
+	
+	@Test
+    public void verificarSeEstaNoCache() {
+        Cache cache = entityManagerFactory.getCache();
+
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+
+        System.out.println("Buscando a partir da instância 1:");
+        entityManager1
+                .createQuery("select p from Pedido p", Pedido.class)
+                .getResultList();
+
+        Assert.assertTrue(cache.contains(Pedido.class, 1));
+        Assert.assertTrue(cache.contains(Pedido.class, 2));
+    }
 	
 	@Test
 	public void removerDoCache() {
