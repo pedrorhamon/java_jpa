@@ -34,7 +34,6 @@ public class CacheTest {
     public void controlarCacheDinamicamente() {
         // javax.persistence.cache.retrieveMode CacheRetrieveMode
         // javax.persistence.cache.storeMode CacheStoreMode
-
         Cache cache = entityManagerFactory.getCache();
         
         System.out.println("Buscando todos os pedidos..........................");
