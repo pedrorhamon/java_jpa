@@ -21,7 +21,6 @@ import lombok.*;
 @EntityListeners({ GerarNotaFiscalListener.class, GenericoListener.class })
 @Entity
 @Table(name = "pedido")
-@Cacheable
 public class Pedido extends EntidadeBaseInteger 
 //implements PersistentAttributeInterceptable
 {
