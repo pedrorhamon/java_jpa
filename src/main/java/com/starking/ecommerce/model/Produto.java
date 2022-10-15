@@ -106,9 +106,6 @@ public class Produto extends EntidadeBaseInteger implements Serializable {
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Integer id;
-	
-	@Version
-	private Integer versao;
 
 	@NotBlank
 	@Column(name = "nome", length = 255, nullable = false)
