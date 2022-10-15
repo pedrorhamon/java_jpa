@@ -59,6 +59,9 @@ public class CacheTest {
 
         esperar(3);
         Assert.assertFalse(cache.contains(Pedido.class, 2));
+        
+        entityManager1.close();    
+        entityManager2.close();
     }
 	
 	@Test
@@ -88,6 +91,10 @@ public class CacheTest {
                 .createQuery("select p from Pedido p", Pedido.class)
 //                .setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS)
                 .getResultList();
+        
+        entityManager1.close();    
+        entityManager2.close();
+        entityManager3.close();    
     }
 	
 	@Test
@@ -102,6 +109,8 @@ public class CacheTest {
                 .getResultList();
 
         Assert.assertTrue(cache.contains(Pedido.class, 1));
+        
+        entityManager1.close();    
     }
 	
 	@Test
@@ -117,6 +126,8 @@ public class CacheTest {
 
         Assert.assertTrue(cache.contains(Pedido.class, 1));
         Assert.assertTrue(cache.contains(Pedido.class, 2));
+        
+        entityManager1.close();    
     }
 	
 	@Test
@@ -137,6 +148,9 @@ public class CacheTest {
 		System.out.println("Buscando a partir da instância 2:");
 		entityManager2.find(Pedido.class, 1);
 		entityManager2.find(Pedido.class, 2);
+		
+		entityManager1.close();    
+        entityManager2.close();
 	}
 	
 	@Test
@@ -148,6 +162,9 @@ public class CacheTest {
         entityManager1.createQuery("select p from Pedido p", Pedido.class).getResultList();
         System.out.println("Buscando a partir da instância 2:");
         entityManager2.find(Pedido.class, 1);
+        
+        entityManager1.close();    
+        entityManager2.close();
     }
 	
 	@Test
@@ -160,5 +177,8 @@ public class CacheTest {
 
         System.out.println("Buscando a partir da instância 2:");
         entityManager2.find(Pedido.class, 1);
-    }
+        
+        entityManager1.close();    
+        entityManager2.close();
+	}
 }
