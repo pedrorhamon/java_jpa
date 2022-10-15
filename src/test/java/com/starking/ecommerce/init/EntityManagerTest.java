@@ -1,30 +1,13 @@
 package com.starking.ecommerce.init;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
-public class EntityManagerTest {
+public class EntityManagerTest extends EntityManagerFactoryTest {
 	
-	protected static EntityManagerFactory entityManagerFactory;
-
-    protected EntityManager entityManager;
-
-    @BeforeClass
-    public static void setUpBeforeClass() {
-        entityManagerFactory = Persistence
-                .createEntityManagerFactory("Ecommerce-PU");
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass() {
-        entityManagerFactory.close();
-    }
+	protected EntityManager entityManager;
 
     @Before
     public void setUp() {
